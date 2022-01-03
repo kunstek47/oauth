@@ -1,5 +1,5 @@
 {
-  "name": "Oauth_application_for_Security_of_information_systems",
+  "name": "oauth_application_for_security_of_information_systems",
   "version": "1.0.0",
   "description": "Application for oauth and oauth2 authorization and authentication services for application Security of information systems at Faculty of organisation and informatics",
   "main": "main.js",
