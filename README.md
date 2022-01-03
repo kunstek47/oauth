@@ -3,9 +3,9 @@ Implementation of oauth and oauth2 authorization and authentication service for 
 
 ## To get started:
 
-1. Install node modules (dependencies) from both Destkop and Server modules!
+1. Install node modules (dependencies) from both app and server modules!
 
->In terminal first open "Desktop" folder with **cd Desktop** and run `npm install`.
+>In terminal first open "Desktop" folder with **cd app** and run `npm install`.
 Then exit from "Desktop" with **cd ../** and then open "Server" folder with **cd Server**.
 When you are in Server folder also run `npm install`.
 
