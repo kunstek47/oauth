@@ -1,1 +1,0 @@
-This folder will contain all files and folders for electron node.js application.
