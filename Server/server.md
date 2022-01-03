@@ -1,0 +1,1 @@
+Folder that contains all files for node.js - express server.
