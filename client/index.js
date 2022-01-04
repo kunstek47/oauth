@@ -7,6 +7,10 @@ async function run(){
 
     app.use(express.static("./"));
 
+    app.all("/", (request, response) => {
+        response.status(200).send("Hello from client");
+    })
+
     await app.listen(3000);
-    console.log("Client server runing on port 3000");
+    console.log("Client server runing on port 3001");
 }

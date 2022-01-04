@@ -59,5 +59,5 @@ async function run(){
     app.use(express.static("./"));
 
     await app.listen(3001);
-    console.log("Listening on port 3001");
+    console.log("Listening on port 3002");
 }
