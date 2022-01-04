@@ -1,6 +1,8 @@
 const cors = require("cors");
 const express = require("express");
 
+run();
+
 async function run(){
     const app = express();
 
@@ -8,6 +10,10 @@ async function run(){
     const accessToken = new Set();
 
     app.use(express.json());
+
+    app.all("/", (request, response) => {
+        response.status(200).send("Hello world");
+    })
 
     app.post("/code", (request, response) => {
         const authCode = new Array(10).fill(null).map(() => Math.floor(Math.random()*10)).join('');
