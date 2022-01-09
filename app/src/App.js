@@ -60,7 +60,6 @@ function App() {
       if (apiResponse.status === 200) {
         const responseObject = await apiResponse.json();
         cookie.set("access_token", responseObject.access_token);
-        console.log("Dobio sam token: " + responseObject.access_token);
 
         //automaticlly check if our server can decrypt encrypted token
         const apiStatus = await fetch("http://localhost:3001/text", {
@@ -113,7 +112,6 @@ function App() {
 
     if (apiResponse.status === 200) {
       const response = await apiResponse.json();
-      console.log("Dobio sam URL: " + response.authURL);
       setURL(response.authURL);
       setOpen(true);
     } else {
