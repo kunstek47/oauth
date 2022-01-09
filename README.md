@@ -4,7 +4,7 @@ Implementation of oauth and oauth2 authorization and authentication service for 
 ## To run project:
 
 - in the terminal just enter *npm install* to install all dependency
-- after all modules are successfully instaled enter: *npm start*
+- after all modules are successfully installed enter: *npm start*
 
 This will run all servers simultaneously sooo you don't need to worry about anything.
 
