@@ -1,20 +1,19 @@
 # Oauth project
 Implementation of oauth and oauth2 authorization and authentication service for Security of information systems project at Faculty of organization and informatics.
 
-## To get started:
+## To run project:
 
-1. Install node modules (dependencies) from both Destkop and Server modules!
+- in the terminal just enter *npm install* to install all dependency
+- after all modules are successfully instaled enter: *npm start*
 
->In terminal first open "Desktop" folder with **cd Desktop** and run `npm install`.
-Then exit from "Desktop" with **cd ../** and then open "Server" folder with **cd Server**.
-When you are in Server folder also run `npm install`.
+This will run all servers simultaneously sooo you don't need to worry about anything.
 
->Right now you have successfully installed all node modules (dependencies) and now you can run this application.
+## In the terminal:
 
-2. Run server
+- index [0] will represent React application
+- index [1] will represent Client server (our server)
+- index [2] will represent OAuth server (authenticaiton server)
 
-> Open "Server" folder (in the same way like part 1) and run `npm start` to run application or if you want to run in development mode enter `npm run dev` which will run application with nodemon module which re-runs server whenever are there some changes.
+*NOTE:* All console log are still in application, so you can eaisly see how data is transmited through application
 
-3. Run desktop application
-
-> Open "Desktop" folder and run `npm start`. This will automatically run desktop application.
+*NOTE:* **We recommend you and advise you not to use this code in production! This is for education and testing purposes ONLY!**

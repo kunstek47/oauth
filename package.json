@@ -1,0 +1,22 @@
+{
+  "name": "oauth",
+  "version": "1.0.0",
+  "description": "This app creates self hosted oAuth server, application server and React frontend application.",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"cd app && npm install && npm start\" \"cd client && npm install && npm start\" \"cd server && npm install && npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kunstek47/oauth.git"
+  },
+  "author": "Antonio Kunstek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kunstek47/oauth/issues"
+  },
+  "homepage": "https://github.com/kunstek47/oauth#readme",
+  "dependencies": {
+    "concurrently": "^7.0.0"
+  }
+}
