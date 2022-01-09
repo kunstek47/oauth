@@ -17,7 +17,7 @@ This will run all servers simultaneously sooo you don't need to worry about anyt
 ## Login credentials:
 
 - username: *test*
-- password: *test
+- password: *test*
 
 *NOTE:* All console log are still in application, so you can eaisly see how data is transmited through application
 
