@@ -5,47 +5,82 @@ import "./styles/App.css";
 
 
 
-const LogInComponent = () => {
-  async function saveData(event){ 
-    event.preventDefault();
-    const username = event.target.fname.value;
-    const password = event.target.pass.value;
 
-    const apiResponse = await fetch("http://localhost:3001/login", {
-      method: "POST",
-      mode: "cors",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(
-        {username, password}
-      )
-    })
 
-  }
-  return(
-    <div>
-      <div className={"title center"}>
-        <h1>Prijavite se u aplikaciju</h1>
-      </div>
-      <form onSubmit={saveData}>
-        <div className={"center"}>
-          <label htmlFor="fname">Korisnicko ime: </label>
-          <input type="text" id="fname" name="fname"></input>
-        </div>
-        <div className={"center"}>
-          <label htmlFor="pass">Lozinka: </label>
-          <input type="password" id="pass" name="pass"></input>
-        </div>
-        <div className={"center"}>
-          <button className={"button"} type="submit">Prijava</button>
-        </div>
-      </form>
-    </div>
-  )
-}
+
 
 function App() {
   const [hiddenText, setHiddenText] = useState("Currently Hidden! Please log in to reveal text!");
   const [open, setOpen] = useState();
+  const [url, setURL] = useState();
+
+  const LogInComponent = () => {
+    async function saveData(event){ 
+      event.preventDefault();
+      const username = event.target.fname.value;
+      const password = event.target.pass.value;
+  
+      const apiResponse = await fetch(url, {
+        method: "POST",
+        mode: "cors",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(
+          {username, password}
+        )
+      })
+
+      if(apiResponse.status === 200){
+        const responseObject = await apiResponse.json();
+        const cookie = require("cookie-cutter");
+        cookie.set("access_token",responseObject.access_token);
+
+        const apiStatus = await fetch("http://localhost:3001/text",{
+            method: "GET",
+            mode: "cors",
+            credentials: "include",
+            headers: {"Content-Type": "application/json"},
+        });
+        console.log(await apiStatus.status);
+        if(apiStatus.status === 200){
+          const apiResponse = await apiStatus.json();
+          setHiddenText(apiResponse.text);
+          setOpen(false);
+        }
+      }     
+    }
+    return(
+      <div>
+        <div className={"title center"}>
+          <h1>Prijavite se u aplikaciju</h1>
+        </div>
+        <form onSubmit={saveData}>
+          <div className={"center"}>
+            <label htmlFor="fname">Korisnicko ime: </label>
+            <input type="text" id="fname" name="fname"></input>
+          </div>
+          <div className={"center"}>
+            <label htmlFor="pass">Lozinka: </label>
+            <input type="password" id="pass" name="pass"></input>
+          </div>
+          <div className={"center"}>
+            <button className={"button"} type="submit">Prijava</button>
+          </div>
+        </form>
+      </div>
+    )
+  }
+  async function getURL(){
+    const apiResponse = await fetch("http://localhost:3001/client", {
+      method: "GET",
+      mode: "cors",
+      headers: {"Content-Type": "application/json"}
+    })
+  
+    const response = await apiResponse.json();
+    setURL(response.authURL);
+    setOpen(true);
+  }
+
   const responseGoogleSuccess = async (response) => {
     const apiResponse = await fetch("http://localhost:3001/text", {
       method: "GET",
@@ -77,11 +112,11 @@ function App() {
         <hr></hr>
         <div className={"center"}>
             <button onClick={() => {
-              setOpen(true)
+              getURL();
             }} className={"button"}>Oauth autorizacija</button>
         </div>
         {open && <NewWindow>
-          <LogInComponent />
+          <LogInComponent url={url}/>
           </NewWindow>}
         <div className={"center"}>
           <GoogleLogin
