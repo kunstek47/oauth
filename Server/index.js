@@ -6,7 +6,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const level = require("level");
-const db = level("./db", {valueEncoding: "json"})
+const db = level(__dirname + "/db", {valueEncoding: "json"})
 const user = {
     username: "test",
     password: "test",
