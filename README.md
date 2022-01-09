@@ -14,6 +14,11 @@ This will run all servers simultaneously sooo you don't need to worry about anyt
 - index [1] will represent Client server (our server)
 - index [2] will represent OAuth server (authenticaiton server)
 
+## Login credentials:
+
+- username: *test*
+- password: *test
+
 *NOTE:* All console log are still in application, so you can eaisly see how data is transmited through application
 
 *NOTE:* **We recommend you and advise you not to use this code in production! This is for education and testing purposes ONLY!**
