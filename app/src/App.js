@@ -3,23 +3,24 @@ import NewWindow from "react-new-window";
 import {GoogleLogin} from 'react-google-login';
 import "./styles/App.css";
 
-
-
-
-
-
-
+/*
+  ? App function returns React application
+ */
 function App() {
-  const [hiddenText, setHiddenText] = useState("Currently Hidden! Please log in to reveal text!");
-  const [open, setOpen] = useState();
-  const [url, setURL] = useState();
+  const [hiddenText, setHiddenText] = useState("Currently Hidden! Please log in to reveal text!"); //will hold value of hidden text
+  const [open, setOpen] = useState(); //will open second window for authentication
+  const [url, setURL] = useState(); //will make request to this url -> will be explained later
 
+
+  //simple component for login
   const LogInComponent = () => {
     async function saveData(event){ 
       event.preventDefault();
-      const username = event.target.fname.value;
+      const username = event.target.fname.value; //passing values from form
       const password = event.target.pass.value;
   
+      //making a post request to url -> exmp of URL: http://localhost:3002/authenticate/1214sdjaosdh1ohwqqwqe
+      //last parameter in url represent cliend ID for this application
       const apiResponse = await fetch(url, {
         method: "POST",
         mode: "cors",
@@ -28,22 +29,27 @@ function App() {
           {username, password}
         )
       })
-
+      //if authentication is successfull set token in a cookie -> access_token
       if(apiResponse.status === 200){
         const responseObject = await apiResponse.json();
         const cookie = require("cookie-cutter");
         cookie.set("access_token",responseObject.access_token);
 
+        //automaticlly check if our server can decrypt encrypted token
         const apiStatus = await fetch("http://localhost:3001/text",{
             method: "GET",
             mode: "cors",
             credentials: "include",
             headers: {"Content-Type": "application/json"},
         });
-        console.log(await apiStatus.status);
+        //if decryption is successfull get hidden text, else show that text is still hidden
         if(apiStatus.status === 200){
           const apiResponse = await apiStatus.json();
           setHiddenText(apiResponse.text);
+          setOpen(false);
+        }
+        else{
+          setHiddenText("Still hidden");
           setOpen(false);
         }
       }     
@@ -69,6 +75,7 @@ function App() {
       </div>
     )
   }
+  //this function will get and set url with our clientID
   async function getURL(){
     const apiResponse = await fetch("http://localhost:3001/client", {
       method: "GET",
@@ -76,13 +83,20 @@ function App() {
       headers: {"Content-Type": "application/json"}
     })
   
-    const response = await apiResponse.json();
-    setURL(response.authURL);
-    setOpen(true);
+    if(apiResponse.status === 200)
+    {
+      const response = await apiResponse.json();
+      setURL(response.authURL);
+      setOpen(true);
+    }
+    else{
+      console.log("No clientID");
+    }
   }
 
+  //Functions that will handle google oAuth login
   const responseGoogleSuccess = async (response) => {
-    const apiResponse = await fetch("http://localhost:3001/text", {
+    const apiResponse = await fetch("http://localhost:3001/google/text", {
       method: "GET",
       mode: "cors",
       headers: {"Content-Type": "application/json"}

@@ -1,3 +1,8 @@
+/*
+* THIS IS CLIENT SERVER
+*/
+
+
 const express = require("express");
 const cors = require("cors");
 const axios = require("axios").default;
@@ -19,6 +24,9 @@ async function run(){
         response.status(200).send("Hello from client server");
     })
 
+    /*
+    ! This route gets clientID and secret for our application, so we can successfully authorized user
+    */
     app.get("/client", async (request, response) => {
         if(clientID == undefined || clientID == ""){
             axios({
@@ -59,18 +67,18 @@ async function run(){
             })
         }
         else{
-            console.log("Client ID: ", clientID);
-            console.log("Secret is: ", secret)
             response.status(200).json({
                 clientID: clientID,
-                authURL: `http://localhost:3002/authenticate/${clientID}`
+                authURL: `http://localhost:3002/authenticate/${clientID}` //url with we can authorize our user
             })
         }
     })
 
+    /*
+    ! Decrpyt if token is valid, if it is return hidden text
+    */
     app.get("/text", (request, response) => {
         const accessToken = (request.cookies?.access_token);
-        console.log("Access_token is: ", accessToken)
         jwt.verify(accessToken, secret, (error, decoded) => {
             if(error){
                 return response.status(503).json({
@@ -83,12 +91,18 @@ async function run(){
                 })
             }
 
-            console.log(decoded);
+            console.log("Decoded token, user is: ", decoded);
             return response.status(200).json({
-                text: "Hooray! You can now see a hidden text!"
+                text: "Hooray! You can now see a hidden text thanks to our Oauth server."
             });
         });
     })
+
+    app.get("/google/text", (request, response) => {
+            return response.status(200).json({
+                text: "Hooray! You can now see a hidden text becaues your are logged in with google."
+            });
+        });
 
     await app.listen(3001);
     console.log("Client server runing on port 3001");

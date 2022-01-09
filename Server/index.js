@@ -1,15 +1,18 @@
+/*
+* THIS IS OAUTH SERVER
+*/
 const cors = require("cors");
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const level = require("level");
-
 const db = level("./db", {valueEncoding: "json"})
 const user = {
     username: "test",
     password: "test",
 }
 
+//function creates random 32 long string, used for creation of clientID and secret
 function createRandom32String(){
     var secret = "";
     var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuwxyz1234567890";
@@ -24,6 +27,7 @@ function createRandom32String(){
 */
 function createAndSaveCliendID(){
     var clientID = createRandom32String();
+    //db is key-value database, intialize everytime our server launches
     db.put(clientID, createRandom32String(), (error) => {
         if(error){
             throw error;
@@ -36,10 +40,7 @@ run();
 
 async function run(){
     const app = express();
-    /*
-    !   This function creates secret, we send this secret to client server so we can decrypt our token later
-    ?   Function returns secret as string
-    */
+    
     app.use(express.json());
     app.use(cookieParser());
     app.use(cors({origin: ["http://localhost:3000", "http://localhost:3001"]}))
@@ -52,6 +53,10 @@ async function run(){
         response.send("Hello I am OAuth server!");
     }); 
 
+    /*
+    !   This function creates secret, we send this secret to client server so we can decrypt our token later
+    ?   Function returns secret as string
+    */
     app.get("/client", (request, response) => {
         try {
             var clientID = createAndSaveCliendID();
