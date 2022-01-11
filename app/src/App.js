@@ -174,7 +174,7 @@ function App() {
         )}
         <div className={"center"}>
           <GoogleLogin
-            clientId="184708501539-4vsu96fb1oe3etj9t7junre8b6cakp4g.apps.googleusercontent.com"
+            clientId="PUT YOUR GOOGLE API CLIENT ID HERE!"
             buttonText="Google login"
             onSuccess={responseGoogleSuccess}
             onFailure={responseGoogleFailure}
