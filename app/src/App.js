@@ -13,6 +13,7 @@ function App() {
   ); //will hold value of hidden text
   const [open, setOpen] = useState(); //will open second window for authentication
   const [url, setURL] = useState(); //will make request to this url -> will be explained later
+  console.log("Bokic");
 
   // check if logged in and if so, display text
   const CheckIfUserLoggedIn = async () => {
